@@ -11,6 +11,7 @@ const appLogger = require('../loggers/app-logger');
 let pauser_ = new Rx.Subject();
 
 let geoPolling$_ = Rx.Observable.interval(API.POLLING_INTERVAL)
+  .startWith(-1)
   .switchMap(() => GeoAPI.getList())
   .do((response) => appLogger.info(response))
   .flatMap(pollingStream_)

@@ -38,7 +38,7 @@ describe('app suite', function() {
       client.publish(CHANNEL.HAS_USERS, 'true');
       setTimeout(function() {
         client.publish(CHANNEL.HAS_USERS, 'true');
-      }, POLLING_INTERVAL + 200);
-    }, POLLING_INTERVAL + 6000 /* 6s */);
+      }, POLLING_INTERVAL + 100);
+    }, POLLING_INTERVAL + 400 /* 6s */);
   });
 });
