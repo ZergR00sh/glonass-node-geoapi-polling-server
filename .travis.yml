@@ -2,7 +2,8 @@ language: node_js
 node_js:
   - "6.1"
 env:
-    - NODE_ENV=testing
+  - global:
+    - NODE_ENV=development
     - REDIS_HOST=localhost
     - DEBUG=app-info,app-error,app-debug,redis-info,redis-error,redis-debug
 services:
