@@ -6,7 +6,7 @@ const redisFactory = require('../../src/db/redis-factory');
 const Api = require('../../src/api');
 
 describe('app suite', function() {
-  let devices = require('./devices.json');
+  let devices = require('../fixtures/devices.json');
 
   beforeAll(function() {
     mock.onGet(Api.listURI_)

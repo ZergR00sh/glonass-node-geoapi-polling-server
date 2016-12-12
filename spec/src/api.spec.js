@@ -7,24 +7,7 @@ describe('Api suite', function() {
       name: 'BlaBla',
   };
   beforeAll(function() {
-    mock.onGet(Api.listURI_).reply(200, [
-      {
-        name: 'BlaBlaBla1',
-        imei: '1337133713371337',
-      },
-      {
-        name: 'BlaBlaBla2',
-        imei: '1337133713371338',
-      },
-      {
-        name: 'BlaBlaBla3',
-        imei: '1337133713371339',
-      },
-      {
-        name: 'BlaBlaBla4',
-        imei: '1337133713371340',
-      },
-    ])
+    mock.onGet(Api.listURI_).reply(200, require('../fixtures/devices.json'))
     .onGet(Api.getStateURI_(deviceExample.imei)).reply(200, {
       imei: '1231231',
       ts: '0000-00-00 00:00:00',
