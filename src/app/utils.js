@@ -9,15 +9,12 @@ const CHANNEL = require('../constants').CHANNEL;
 const appLogger = require('../loggers/app-logger');
 
 let pauser_ = new Rx.Subject();
+let timer$_ = Rx.Observable.timer(0, API.POLLING_INTERVAL);
 
-let geoPolling$_ = Rx.Observable.interval(API.POLLING_INTERVAL)
-  .startWith(-1)
-  .switchMap(() => GeoAPI.getList())
+let geoPolling$_ = timer$_.switchMap(GeoAPI.getList)
   .do((response) => appLogger.info(response))
-  .flatMap(pollingStream_)
-  .do(publishDevicesState_)
-  .catch(responseErrorHandler_)
-  .retry();
+  .flatMap(pollingStreamFactory_)
+  .do(publishDevicesState_);
 
 let statefulPoller_ = pauser_.switchMap(pollingSwitcher_);
 
@@ -28,9 +25,9 @@ let statefulPoller_ = pauser_.switchMap(pollingSwitcher_);
  * @param  {Array} arr array of devices
  * @return {Observable} stream
  */
-function pollingStream_(arr) {
+function pollingStreamFactory_(arr) {
   return Rx.Observable.from(arr)
-      .flatMap((device) => GeoAPI.getStateOfDevice(device))
+      .flatMap(GeoAPI.getStateOfDevice)
       .reduce(accumulateArray, []);
 }
 
@@ -62,21 +59,9 @@ function pollingSwitcher_(turnOn) {
    return turnOn ? geoPolling$_ : Rx.Observable.empty();
 }
 
-/**
- * Error handler
- * @param  {Error} error respose error
- * @return {Observable} empty observable
- */
-function responseErrorHandler_(error) {
-  const response = error.response;
-  const status = response.status;
-  appLogger.info('%d error happened with next response: %o', status, response);
-  return Rx.Observable.empty();
-}
-
 module.exports = {
   statefulPoller_,
-  pollingStream_,
+  pollingStreamFactory_,
   pollingSwitcher_,
   pauser_,
   publishDevicesState_,

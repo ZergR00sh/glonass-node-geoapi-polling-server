@@ -7,7 +7,7 @@ const GEO_STATE_CHANNEL = process.env.GEO_STATE_CHANNEL || 'GEO_STATE_CHANNEL';
 const REDIS_HOST = process.env.REDIS_HOST || 'redis.db';
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
-const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 500;
+const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 3000;
 
 module.exports = {
   API: {

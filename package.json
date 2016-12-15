@@ -4,6 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
+    "start": "node ./src/index.js",
     "test": "`npm bin`/jasmine",
     "lint": "`npm bin`/eslint .",
     "pretest": "npm run lint"

@@ -1,6 +1,7 @@
 const axios = require('axios');
 const API = require('../constants').API;
 const listURI_ = `${API.BASE}/api/getList?auth=${API.KEY}`;
+let prevDevices = [];
 
 /**
  * Return URI for getState GeoAPI
@@ -16,7 +17,12 @@ function getStateURI_(imei) {
  * @return {Promise} API promise
  */
 function getList() {
-  return axios.get(listURI_).then((response) => response.data);
+  return axios.get(listURI_)
+    .then((response) => {
+      prevDevices = response.data;
+      return response.data;
+    })
+    .catch((err) => prevDevices);
 }
 
 /**

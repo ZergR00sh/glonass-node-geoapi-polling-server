@@ -64,13 +64,13 @@ describe('utils suite', function() {
     });
   });
 
-  describe('pollingStream_ suite', function() {
-    const pollingStream_ = utils.pollingStream_;
+  describe('pollingStreamFactory_ suite', function() {
+    const pollingStreamFactory_ = utils.pollingStreamFactory_;
     it('should return an Observable', function() {
-      expect(pollingStream_([]) instanceof Rx.Observable).toBe(true);
+      expect(pollingStreamFactory_([]) instanceof Rx.Observable).toBe(true);
     });
     it('should communicate with geoapi', function(done) {
-      pollingStream_(devices).subscribe(function(res) {
+      pollingStreamFactory_(devices).subscribe(function(res) {
         expect(JSON.stringify(res) === JSON.stringify(devices)).toBe(true);
         done();
       });
