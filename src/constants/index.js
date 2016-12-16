@@ -22,5 +22,9 @@ module.exports = {
   CHANNEL: {
     HAS_USERS: HAS_USERS_CHANNEL,
     GEO_STATE: GEO_STATE_CHANNEL,
+    MSGS: {
+      FIRST_USER_ARRIVED: 'FIRST_USER_ARRIVED',
+      LAST_USER_LEFT: 'LAST_USER_LEFT',
+    },
   },
 };

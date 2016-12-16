@@ -28,16 +28,16 @@ describe('app suite', function() {
     it('should polling depend on redis input commands', function(done) {
       let i = 0;
       poller.start(function(res) {
-        client.publish(CHANNEL.HAS_USERS, 'false');
+        client.publish(CHANNEL.HAS_USERS, CHANNEL.MSGS.LAST_USER_LEFT);
         if(++i === 2) {
           client.end(true);
           poller.stop();
           done();
         }
       });
-      client.publish(CHANNEL.HAS_USERS, 'true');
+      client.publish(CHANNEL.HAS_USERS, CHANNEL.MSGS.FIRST_USER_ARRIVED);
       setTimeout(function() {
-        client.publish(CHANNEL.HAS_USERS, 'true');
+        client.publish(CHANNEL.HAS_USERS, CHANNEL.MSGS.FIRST_USER_ARRIVED);
       }, POLLING_INTERVAL + 100);
     }, POLLING_INTERVAL + 400 /* 6s */);
   });

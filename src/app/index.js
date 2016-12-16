@@ -44,14 +44,16 @@ class Poller {
   _onMessage(channel, message) {
     redisLogger.info('received message on ' + channel + ': ' + message);
     if (channel === CHANNEL.HAS_USERS) {
-        try {
-          // eslint-disable-next-line no-var
-          var turnOn = JSON.parse(message);
-        } catch(e) {
-          redisLog('parsing error:\n%o', e);
-          turnOn = true;
-        }
-        this.pauser.next(turnOn);
+      switch(message) {
+        case CHANNEL.MSGS.FIRST_USER_ARRIVED:
+          this.pauser.next(true);
+          break;
+        case CHANNEL.MSGS.LAST_USER_LEFT:
+          this.pauser.next(false);
+          break;
+        default:
+          appLogger.debug('UNHENDLED_MESSAGE');
+      }
     }
   }
 }
