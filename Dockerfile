@@ -8,9 +8,8 @@ WORKDIR /app
 
 COPY package.json /app/package.json
 
-RUN npm install --no-optional
-
-RUN npm install nodemon -g --no-optional
+RUN npm install --no-optional &&
+	npm install nodemon -g --no-optional
 
 COPY . /app
 
